@@ -1,0 +1,11 @@
+<launch>
+  <node pkg="beginner_tutorials" name="action_server" type="simple_action_server" />
+  <node pkg="beginner_tutorials" name="action_client" type="simple_action_client" />
+
+  <param name="test/topic" value="do_dishes/status" />
+  <param name="test/hz" value="5.0" />
+  <param name="test/hzerror" value="1.0" />
+  <param name="test/test_duration" value="5.0" />
+  <test test-name="actionlib" pkg="rostest" type="hztest" name="test" />
+
+</launch>

@@ -22,13 +22,10 @@ install:
   - sudo apt-get install -qq -y ros-hydro-desktop ros-hydro-roscpp-tutorials ros-hydro-rostest python-catkin-tools
 before_script:
   - ls
-  - mv 20150930/check1.test 20150930/src/beginner_tutorials
-  - mv 20150930/check2.test 20150930/src/beginner_tutorials
+  - for dir in 20*; do if [ -e $dir/src/beginner_tutorials ] ; then cp $dir/check*.* $dir/src/beginner_tutorials; fi; done;
 script:
-  - source /opt/ros/hydro/setup.bash
-  - cd 20150930
-  - catkin build
-  - source devel/setup.bash
-  - rospack list
-  - rostest beginner_tutorials check1.test
-  - rostest beginner_tutorials check2.test
+  - for dir in 20*; do if [ -e $dir/src/beginner_tutorials ] ; then source /opt/ros/hydro/setup.bash; cd $dir; catkin build -v -i; source devel/setup.bash; rospack list; cd src/beginner_tutorials; EXIT_STATUS=0; for test_file in check*.test; do rostest beginner_tutorials $test_file || EXIT_STATUS=1; done; cd ../../; cd ..; fi; done; [ $EXIT_STATUS == 0 ]
+after_failure:
+  - find src/ -type d -name .git -prune -o -type f -exec ls -l {} \;
+  - rostest -t beginner_tutorials check1.test
+  - rostest -t beginner_tutorials check2.test

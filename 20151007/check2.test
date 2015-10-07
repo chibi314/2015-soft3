@@ -1,0 +1,10 @@
+<launch>
+  <node pkg="beginner_tutorials" name="talker" type="talker" />
+  <node pkg="beginner_tutorials" name="listener" type="listener" />
+
+  <param name="test/topic" value="chatter" />
+  <param name="test/hz" value="1.0" />
+  <param name="test/hzerror" value="0.5" />
+  <param name="test/test_duration" value="5.0" />
+  <test test-name="talker_listener" pkg="rostest" type="hztest" name="test" />
+</launch>

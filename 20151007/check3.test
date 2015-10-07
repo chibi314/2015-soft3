@@ -1,0 +1,5 @@
+<launch>
+  <node pkg="beginner_tutorials" name="server" type="add_two_ints_server.py" />
+
+  <test test-name="add_two_ints" pkg="beginner_tutorials" name="client" type="check3.py"/>
+</launch>
